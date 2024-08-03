@@ -29,10 +29,14 @@ yarn-error.*
 *.pem
 
 # local env files
-.env*.local
+.env
+*.local
 
 # typescript
 *.tsbuildinfo
 
 # Jetbrains IDE folder
 .idea/
+package-lock.json
+vendor
+Gemfile.lock
