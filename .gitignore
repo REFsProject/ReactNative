@@ -38,5 +38,5 @@ yarn-error.*
 # Jetbrains IDE folder
 .idea/
 package-lock.json
-vendor
+vendor/
 Gemfile.lock

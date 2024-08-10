@@ -1,5 +1,5 @@
 /**
- * Sample React Native App
+ * Sample ReactNative Native App
  * https://github.com/facebook/react-native
  *
  * @format
