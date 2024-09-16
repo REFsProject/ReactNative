@@ -6,8 +6,7 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import Login from "./components/Login.tsx";
+import {PropsWithChildren} from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -16,10 +15,11 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
+import Colors from "../app/constants/Colors";
+import Login from "../app/components/Login";
 
-import Colors from './constants/Colors';
 
-function App(): React.JSX.Element {
+function App() {
     const isDarkMode = useColorScheme() === 'dark';
 
     const backgroundStyle = {

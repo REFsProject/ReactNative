@@ -1,13 +1,13 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
-import Colors from "../constants/Colors.ts";
+import Colors from "../constants/Colors.js";
 import { DimensionValue } from "react-native";
 
-const Input = (placeHolder: string, value: string, callback: React.Dispatch<React.SetStateAction<any>>): React.JSX.Element =>
+const Input = (placeHolder, value, callback) =>
   <TextInput keyboardAppearance={'dark'} autoCapitalize={'none'} keyboardType={'email-address'} onChangeText={callback} style={styles.input} placeholderTextColor={'gray'} placeholder={placeHolder}
                                                   value={value} />;
 
-export default function Login(): React.JSX.Element {
+export default function Login(){
   const [user, onChangeUser] = React.useState("");
   const [password, onChangePassword] = React.useState("");
   return <View style={styles.container}>
