@@ -15,9 +15,7 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
-import Colors from "../app/constants/Colors";
-import Login from "../app/components/Login";
-
+import Colors from "../constants/Colors";
 
 function App() {
     const isDarkMode = useColorScheme() === 'dark';
@@ -28,13 +26,12 @@ function App() {
     };
 
     return (
-        <SafeAreaView style={backgroundStyle}>
-            <ScrollView
-                contentInsetAdjustmentBehavior="automatic"
-                style={backgroundStyle}>
-                <Login/>
-            </ScrollView>
-        </SafeAreaView>
+            <SafeAreaView style={backgroundStyle}>
+                <ScrollView
+                    contentInsetAdjustmentBehavior="automatic"
+                    style={backgroundStyle}>
+                </ScrollView>
+            </SafeAreaView>
     );
 }
 

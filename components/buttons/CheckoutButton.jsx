@@ -1,8 +1,9 @@
-import {ViewBase} from "react-native";
+import View from 'react';
 
 export default function CheckoutButton()
 {
     return (
-        <ViewBase
+        <View>
+        </View>
     )
 }
