@@ -2,12 +2,12 @@ import React, {MutableRefObject, useRef, useState} from "react";
 import {Text, TouchableOpacity, View} from "react-native";
 import MainScreenInteractionButton from "~/components/buttons/MainScreenInteractionButton";
 import VideoDescription from "~/components/video/VideoDescription";
+import {useContainerHeightRef} from "~/components/common/RefsContentWrapper";
 
 type RefsVideoProps = {
     likes: number,
     comments: number,
     description?: string,
-    heightRef?: MutableRefObject<number>
 }
 
 export default function RefsVideo(props: RefsVideoProps): React.JSX.Element {
@@ -15,6 +15,7 @@ export default function RefsVideo(props: RefsVideoProps): React.JSX.Element {
     const [isPaused, setIsPaused] = useState(false);
     const [likes, setLikes] = useState(props.likes);
     const [focus, setFocus] = useState("");
+    const height = useContainerHeightRef().current;
 
     const handleVideoPress = () => {
         setIsPaused(!isPaused);
@@ -36,7 +37,7 @@ export default function RefsVideo(props: RefsVideoProps): React.JSX.Element {
         <View className={"h-full w-full border-2 bg-gray-700"}>
             <Text className={"text-black flex-1 pl-7 mx-5"}>dzqdqzdzd</Text>
 
-            <View className={"border justify-center"} style={{ marginBottom: props.heightRef.current / 8, marginLeft: 'auto', marginRight: 0, height: props.heightRef.current * 0.5, paddingVertical: 40}}>
+            <View className={"border justify-center"} style={{ marginBottom: height / 8, marginLeft: 'auto', marginRight: 0, height: height * 0.5, paddingVertical: 40}}>
 
                 <MainScreenInteractionButton componentName={"user"} onPress={handleRetweet} focusState={{focus, setFocus}}/>
                 <MainScreenInteractionButton componentName={"retweet"} onPress={handleRetweet} data={"Retweet"} focusState={{focus, setFocus}}/>
@@ -45,7 +46,7 @@ export default function RefsVideo(props: RefsVideoProps): React.JSX.Element {
 
             </View>
 
-            <View className={"absolute border"} style={{marginBottom: 0, marginTop: "auto"}}>
+            <View className={"absolute border"} style={{bottom: 0, }}>
                 <VideoDescription text={props.description ?? "fesfesfsef"}/>
             </View>
 

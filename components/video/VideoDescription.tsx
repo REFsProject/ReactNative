@@ -18,7 +18,7 @@ export default function VideoDescription(props: VideoDescriptionProps): React.JS
 
 
     return(
-        <View className={"mb-16 -pt border max-h-44 h-24"}>
+        <View className={"mb-10 border max-h-44 h-24"}>
             <TouchableOpacity className={"text-gray-500 flex-row"} onPress={() => setPressed(true)}>
                 <Text>{text}</Text>
                 <Text>Voir plus</Text>

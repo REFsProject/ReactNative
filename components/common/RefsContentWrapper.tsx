@@ -1,6 +1,6 @@
 //TODO: Add/make a video librairies
 
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, MutableRefObject} from 'react';
 import {View, Dimensions} from 'react-native';
 import Animated from "react-native-reanimated";
 import RefsVideo from "~/components/video/RefsVideo";
@@ -15,54 +15,60 @@ type RefsData = {
     additionalData?: any;
 }
 
+const { height, width } = Dimensions.get('window');
+
+export const useContainerHeightRef = () =>
+{
+    let TabBarHeight = useBottomTabBarHeight();
+    let ContainerHeightRef = useRef(0);
+    ContainerHeightRef.current = height - TabBarHeight;
+    return ContainerHeightRef;
+}
+
+const videoData  = [
+    {
+        id: '1',
+        videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
+        likes: 100,
+        comments: 1400
+    },
+    {
+        id: '2',
+        videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
+        likes: 200,
+        comments: 1400
+    },
+    {
+        id: '3',
+        videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
+        likes: 100,
+        comments: 1400
+    },
+    {
+        id: '4',
+        videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
+        likes: 200,
+        comments: 1400
+    },
+    {
+        id: '5',
+        videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
+        likes: 100,
+        comments: 1400
+    },
+    {
+        id: '6',
+        videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
+        likes: 200,
+        comments: 1400
+    },
+
+] as RefsData[];
+
 export default function RefsContentWrapper() {
     const [activeIndex, setActiveIndex] = useState(0);
     const flatListRef = useRef(null);
-    const TabBarHeight = useBottomTabBarHeight();
-    let { height, width } = Dimensions.get('window');
-
-    const ContainerHeightRef = useRef(0);
-    ContainerHeightRef.current = height - TabBarHeight;
-
-    const videoData  = [
-        {
-            id: '1',
-            videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
-            likes: 100,
-            comments: 1400
-        },
-        {
-            id: '2',
-            videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
-            likes: 200,
-            comments: 1400
-        },
-        {
-            id: '3',
-            videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
-            likes: 100,
-            comments: 1400
-        },
-        {
-            id: '4',
-            videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
-            likes: 200,
-            comments: 1400
-        },
-        {
-            id: '5',
-            videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
-            likes: 100,
-            comments: 1400
-        },
-        {
-            id: '6',
-            videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
-            likes: 200,
-            comments: 1400
-        },
-
-    ] as RefsData[];
+    const containerHeight = useContainerHeightRef().current;
 
     const onViewableItemsChanged = useRef(({ viewableItems }) => {
         if (viewableItems.length > 0) {
@@ -77,9 +83,8 @@ export default function RefsContentWrapper() {
 
     const renderItem = ({ item, index }) => {
         return (
-        <View style={{height: ContainerHeightRef.current , width: width}}>
+        <View style={{height: containerHeight , width: width}}>
             <RefsVideo
-                heightRef={ContainerHeightRef}
                 likes={item.likes}
                 comments={item.comments}
             />
@@ -96,7 +101,6 @@ export default function RefsContentWrapper() {
                 keyExtractor={item => item.id}
                 pagingEnabled={true}
                 className={"bg-black"}
-                contentContainerClassName={""}
                 showsVerticalScrollIndicator={false}
                 onViewableItemsChanged={onViewableItemsChanged.current}
                 viewabilityConfig={viewabilityConfig}

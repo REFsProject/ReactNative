@@ -20,7 +20,7 @@ export default function Layout()
             }}/>
 
             <Tabs.Screen name={"Main"} options={{title: "Main", headerShown: false}} />
-            <Tabs.Screen name={"Message"} options={{title: "Message"}}/>
+            <Tabs.Screen name={"Message"} options={{title: "Message", headerShown: false}}/>
             <Tabs.Screen name={"Reward"} options={{title: "Reward"}}/>
         </Tabs>
     )
