@@ -1,6 +1,7 @@
-import {Animated, SafeAreaView, ScrollView, View} from "react-native";
-import React, {useRef} from "react";
-import MessageCard from "~/components/common/MessageCard";
+import {Animated, SafeAreaView, View, StyleSheet} from "react-native";
+import React, {MutableRefObject, useRef, useState} from "react";
+import MessageCard, {MessageCardProps} from "~/components/card/MessageCard";
+import SearchBar from "~/components/navbar/SearchBar";
 
 const data = [
     {
@@ -38,12 +39,10 @@ const data = [
         },
         lastMessage: "Ça te dit un déjeuner demain ?"
     }
-];
+] as MessageCardProps[];
 
-export const useFriendListRef = () => {
-    const FriendRef = useRef([]);
-    FriendRef.current = data;
-    return FriendRef;
+export const useFriendListRef = (): MutableRefObject<MessageCardProps[]> => {
+    return useRef(data);
 }
 
 function renderMessage({item, index}): React.JSX.Element
@@ -59,9 +58,31 @@ function renderMessage({item, index}): React.JSX.Element
 
 export default function Message()
 {
-    const flatListRef = useRef(null);
+    const [value, setValue] = React.useState("");
+    const [matchedResult, setMatchedResult] = useState([] as MessageCardProps[]);
+    const friendList = useFriendListRef();
+
+    const onChangeText = (text: string)=>
+    {
+        let result = [];
+
+        for (let i = 0; i < friendList.current.length ; i++)
+        {
+            if(friendList.current[i].username.slice(0, text.length) === text)
+            {
+                result[i] = friendList.current[i];
+            }
+        }
+        setValue(text);
+        setMatchedResult(result);
+    }
+
     return(
-        <SafeAreaView className={'bg-gray-700 h-full'}>
+        <SafeAreaView className={'bg-black h-full'}>
+            <View style={styles.searchBar}>
+                <SearchBar data={useFriendListRef().current} placeholder={"Rechercher"} onChangeText={onChangeText} entryValue={value}/>
+
+            </View>
             <View style={{top: 120}}>
                 <Animated.FlatList
                     renderItem={renderMessage}
@@ -71,3 +92,10 @@ export default function Message()
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    searchBar: {
+        paddingHorizontal: 20,
+        top: 50
+    }
+})

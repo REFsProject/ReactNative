@@ -1,33 +1,32 @@
-import {TextInput, View} from "react-native";
+import {StyleSheet, TextInput, View} from "react-native";
 import {Input} from "~/lib/components/ui/input";
-import {useState} from "react";
-import {useFriendListRef} from "~/app/(tabs)/Message";
+import { useState} from "react";
 
 type SearchBarProps = {
     data: Array<any>,
     placeholder: string,
-    color?: "black" | "white"
+    onChangeText: (text: string) => void,
+    entryValue: string,
+    color?: "black" | "white",
 }
 
-function onChangeText(text: string)
-{
-    const friendList = useFriendListRef();
-
-}
 
 export default function SearchBar(props: SearchBarProps)
 {
-    const [value, setValue] = useState("");
-
     return(
         <View>
             <Input
-                placeholder={"Rechercher"}
-                value={value}
-                onChangeText={onChangeText}
+                placeholder={props.placeholder}
+                value={props.entryValue}
+                onChangeText={props.onChangeText}
                 aria-labelledby='inputLabel'
                 aria-errormessage='inputError'
             />
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+   container:
+       {}
+});

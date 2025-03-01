@@ -1,4 +1,4 @@
-import {Image, KeyboardType, KeyboardTypeOptions, SafeAreaView, View} from "react-native";
+import {Image, StyleSheet,  KeyboardType, KeyboardTypeOptions, SafeAreaView, View} from "react-native";
 import {Button} from "~/lib/components/ui/button";
 import {Input} from "~/lib/components/ui/input";
 import {MutableRefObject, useRef, useState,} from "react";
@@ -56,7 +56,7 @@ export default function SignIn() {
                         <Button
                             className={"text-white justify-start flex-row bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50  font-medium rounded-lg dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30 me-2 "}>
                             <Image
-                                className={"bg-white w-5 h-5"}
+                                style={{width: 20, height: 20, backgroundColor: "white"}}
                                 source={require('~/assets/images/apple.png')}
                             />
                             <Text className={"text-white mb-0.5"}> Sign in with Apple </Text>
@@ -97,6 +97,12 @@ export default function SignIn() {
 
     );
 }
+
+const styles = StyleSheet.create({
+    signInButton: {
+
+    }
+})
 
 function attempLogin(props: LoginUserEntry, ref: MutableRefObject<boolean>): void
 {

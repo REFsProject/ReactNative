@@ -68,7 +68,7 @@ const videoData  = [
 export default function RefsContentWrapper() {
     const [activeIndex, setActiveIndex] = useState(0);
     const flatListRef = useRef(null);
-    const containerHeight = useContainerHeightRef().current;
+    const containerHeightRef = useContainerHeightRef();
 
     const onViewableItemsChanged = useRef(({ viewableItems }) => {
         if (viewableItems.length > 0) {
@@ -83,10 +83,11 @@ export default function RefsContentWrapper() {
 
     const renderItem = ({ item, index }) => {
         return (
-        <View style={{height: containerHeight , width: width}}>
+        <View style={{height: containerHeightRef.current , width: width}}>
             <RefsVideo
                 likes={item.likes}
                 comments={item.comments}
+                heightRef={containerHeightRef}
             />
         </View>
         )
