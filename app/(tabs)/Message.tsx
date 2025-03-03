@@ -2,6 +2,9 @@ import {Animated, SafeAreaView, View, StyleSheet} from "react-native";
 import React, {MutableRefObject, useRef, useState} from "react";
 import MessageCard, {MessageCardProps} from "~/components/card/MessageCard";
 import SearchBar from "~/components/navbar/SearchBar";
+import Panel from "~/components/list/Panel";
+import FriendsCard from "~/components/card/FriendsCard";
+import {useContainerHeightRef} from "~/components/common/RefsContentWrapper";
 
 const data = [
     {
@@ -61,9 +64,16 @@ export default function Message()
     const [value, setValue] = React.useState("");
     const [matchedResult, setMatchedResult] = useState([] as MessageCardProps[]);
     const friendList = useFriendListRef();
+    const [isPanelRender, setPanelRender] = useState(false);
 
     const onChangeText = (text: string)=>
     {
+        if(text === "") {
+            setPanelRender(false);
+            setValue(text);
+            return;
+        }
+
         let result = [];
 
         for (let i = 0; i < friendList.current.length ; i++)
@@ -73,17 +83,22 @@ export default function Message()
                 result[i] = friendList.current[i];
             }
         }
+        setPanelRender(true);
         setValue(text);
         setMatchedResult(result);
+    }
+
+    const renderComponent = (item: any): React.JSX.Element => {
+        return <FriendsCard username={item.username} avatar={item.profilePicture}/>
     }
 
     return(
         <SafeAreaView className={'bg-black h-full'}>
             <View style={styles.searchBar}>
                 <SearchBar data={useFriendListRef().current} placeholder={"Rechercher"} onChangeText={onChangeText} entryValue={value}/>
-
+                <Panel list={matchedResult as []} renderComponent={renderComponent} showPanel={isPanelRender} contentStyle={styles.panel}/>
             </View>
-            <View style={{top: 120}}>
+            <View style={{top: 120, display: isPanelRender ? "none" : "flex"}}>
                 <Animated.FlatList
                     renderItem={renderMessage}
                     data={data}
@@ -97,5 +112,12 @@ const styles = StyleSheet.create({
     searchBar: {
         paddingHorizontal: 20,
         top: 50
+    },
+
+    panel: {
+        top: 10,
+        borderRadius: 5,
+        backgroundColor: "gray",
+        marginHorizontal: 10,
     }
 })
