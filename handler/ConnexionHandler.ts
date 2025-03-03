@@ -26,10 +26,10 @@ async function processLogin()
         {
             if(isLogged)
             {
-                router.push("/(tabs)/Main");
+                router.replace("/(tabs)/Main");
                 return;
             }
-            router.push("/login/SignIn");
+            router.replace("/login/SignIn");
         })
         .catch((err: any) => console.log(err));
 }

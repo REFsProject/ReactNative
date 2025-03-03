@@ -83,8 +83,9 @@ function RootLayout() {
     return (
         <ThemeProvider value={DARK_THEME}>
             <StatusBar style={'dark'} />
-            <Stack>
-                <Stack.Screen name={"(tabs)"} options={{headerShown: false}}/>
+            <Stack screenOptions={{headerShown: false}}>
+                <Stack.Screen name={"(tabs)"}/>
+                <Stack.Screen name={"pages"}/>
                 <Stack.Screen name={"+not-found"}/>
             </Stack>
         </ThemeProvider>

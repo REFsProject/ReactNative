@@ -1,5 +1,5 @@
 import React from "react";
-import {View, StyleSheet, ScrollView, ViewStyle, Text, Animated} from "react-native";
+import {View, StyleSheet, ViewStyle, Text, Animated} from "react-native";
 
 type PanelProps = {
     list: [],
@@ -20,7 +20,7 @@ export default function Panel(props: PanelProps): React.JSX.Element
 function renderItems(list: [], renderComponent: (item: any) => React.JSX.Element): React.JSX.Element
 {
     return list.length === 0 ?
-        <View><Text>Oups, il semblerait que rien ne corresponde a voter recherche</Text></View> :
+        <View><Text>Oups, il semblerait que rien ne corresponde a votre recherche</Text></View> :
         <Animated.FlatList renderItem={renderComponent} data={list} />
 }
 

@@ -28,7 +28,7 @@ export default function MessageCard(props: MessageCardProps): React.JSX.Element
             <Text className={'absolute font-bold text-white'} style={{left: 70, top: 10}}>{props.username}</Text>
             <View className={"flex flex-row"} style={{paddingHorizontal: 10, paddingVertical: 7, marginVertical: 10}}>
                 <Avatar alt={props.username} style={{marginRight: 20, height: 40, width: 40}}>
-                    <AvatarImage source={{uri: "https://static.vecteezy.com/system/resources/previews/024/183/502/non_2x/male-avatar-portrait-of-a-young-man-with-a-beard-illustration-of-male-character-in-modern-color-style-vector.jpg"}}/>
+                    <AvatarImage source={props.profilePicture}/>
                 </Avatar>
                 <Text style={{top: 10, color: "gray"}}>
                     {sliceString(props.lastMessage, 50)}
