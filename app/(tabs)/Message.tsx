@@ -51,6 +51,8 @@ export const useFriendListRef = (): MutableRefObject<MessageCardProps[]> => {
     return useRef(data);
 }
 
+//TODO: Trouver un système pour transferer differentes info de manière opti en utilisant la navigation dynamique si possible
+
 function renderMessage({item, index}): React.JSX.Element
 {
     return(
@@ -66,6 +68,8 @@ function renderMessage({item, index}): React.JSX.Element
 
 export default function Message()
 {
+
+
     const [value, setValue] = React.useState("");
     const [matchedResult, setMatchedResult] = useState([] as MessageCardProps[]);
     const friendList = useFriendListRef();
