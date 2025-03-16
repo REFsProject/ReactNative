@@ -13,24 +13,24 @@ export default function Layout()
             }
         }}>
             <Tabs.Screen name={"Profile"} options={{
-                title: "Profile",
+                title: "",
                 tabBarIcon: ({focused, color}) => (
-                    <MaterialCommunityIcons name="account-circle-outline" size={24} color="white" />
+                    <MaterialCommunityIcons name="account-circle-outline" size={24} color={focused ? "orange" : "white"} />
                 )
             }}/>
 
-            <Tabs.Screen name={"Main"} options={{title: "Main", headerShown: false,
+            <Tabs.Screen name={"Main"} options={{title: "", headerShown: false,
                 tabBarIcon: ({focused, color}) => (
-                    <Feather name="home" size={24} color="white" />
+                    <Feather name="home" size={24} color={focused ? "orange" : "white"} />
                 )}} />
 
-            <Tabs.Screen name={"Message"} options={{title: "Message", headerShown: false,
+            <Tabs.Screen name={"Message"} options={{title: "", headerShown: false,
                 tabBarIcon: ({focused, color}) => (
-                    <AntDesign name="message1" size={24} color="white" />
+                    <AntDesign name="message1" size={24} color={focused ? "orange" : "white"}/>
                 )}}/>
 
-            <Tabs.Screen name={"Reward"} options={{title: "Reward", tabBarIcon: ({focused, color}) => (
-                    <Octicons name="gift" size={24} color="white" />
+            <Tabs.Screen name={"Reward"} options={{title: "", tabBarIcon: ({focused, color}) => (
+                    <Octicons name="gift" size={24} color={focused ? "orange" : "white"} />
                 )}}/>
         </Tabs>
     )

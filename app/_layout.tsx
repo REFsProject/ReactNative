@@ -9,6 +9,7 @@ import { NAV_THEME } from '~/lib/constants';
 import { useColorScheme } from '~/lib/useColorScheme';
 import {verifyInstallation} from "nativewind";
 import ConnexionHandler from "~/handler/ConnexionHandler";
+import {useState} from "react";
 
 const LIGHT_THEME = {
     dark: false,
@@ -43,10 +44,10 @@ export {
 
 SplashScreen.preventAutoHideAsync();
 
+
 function RootLayout() {
     const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
     const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
-
 
     React.useEffect(() => {
         (async () => {

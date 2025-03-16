@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useRef} from 'react';
 import {PropsWithChildren} from 'react';
 import {
     SafeAreaView,
@@ -17,8 +17,11 @@ import {
 } from 'react-native';
 import Colors from "../constants/Colors";
 
+
+
 function App() {
     const isDarkMode = useColorScheme() === 'dark';
+    const userRef = useRef(null);
 
     const backgroundStyle = {
         backgroundColor: Colors.black,

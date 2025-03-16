@@ -7,47 +7,12 @@ import FriendsCard from "~/components/card/FriendsCard";
 import {useContainerHeightRef} from "~/components/common/RefsContentWrapper";
 import {router} from "expo-router";
 
-const data = [
-    {
-        username: "AliceDubois",
-        profilePicture: {
-            uri: "https://picsum.photos/200/200?image=0"
-        },
-        lastMessage: "Hey, tu as vu le nouveau projet ? 😄"
-    },
-    {
-        username: "BobMartin",
-        profilePicture: {
-            uri: "https://picsum.photos/200/200?image=1"
-        },
-        lastMessage: "On se retrouve à 15h devant le café !"
-    },
-    {
-        username: "CharlieNguyen",
-        profilePicture: {
-            uri: "https://picsum.photos/200/200?image=2"
-        },
-        lastMessage: "Je t'envoie le dossier ce soir 📁"
-    },
-    {
-        username: "DanaCohen",
-        profilePicture: {
-            uri: "https://picsum.photos/200/200?image=3"
-        },
-        lastMessage: "Merci pour ton aide hier ! 🙌"
-    },
-    {
-        username: "EvaLeroy",
-        profilePicture: {
-            uri: "https://picsum.photos/200/200?image=4"
-        },
-        lastMessage: "Ça te dit un déjeuner demain ?"
-    }
-] as MessageCardProps[];
+const data = require("data/friends.json") as MessageCardProps[];
 
 //TODO: Reload system when slidding to the botttom
 
 export const useFriendListRef = (): MutableRefObject<MessageCardProps[]> => {
+    //API update
     return useRef(data);
 }
 
@@ -68,11 +33,9 @@ function renderMessage({item, index}): React.JSX.Element
 
 export default function Message()
 {
-
-
     const [value, setValue] = React.useState("");
     const [matchedResult, setMatchedResult] = useState([] as MessageCardProps[]);
-    const friendList = useFriendListRef();
+    const friendList: MessageCardProps[] = useFriendListRef().current;
     const [isPanelRender, setPanelRender] = useState(false);
 
     const onChangeText = (text: string)=>
@@ -85,13 +48,14 @@ export default function Message()
 
         let result = [];
 
-        for (let i = 0; i < friendList.current.length ; i++)
+        for (let i = 0; i <= friendList.length - 1 ; i++)
         {
-            if(friendList.current[i].username.slice(0, text.length) === text)
+            if(friendList[i].username.slice(0, text.length) === text)
             {
-                result[i] = friendList.current[i];
+                result[result.length] = friendList[i];
             }
         }
+
         setPanelRender(true);
         setValue(text);
         setMatchedResult(result);

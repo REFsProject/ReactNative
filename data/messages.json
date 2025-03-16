@@ -1,0 +1,57 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "messages": {
+        "message": [
+          "Alice, tu as vu le nouveau projet ? 😄",
+          "Oui, je l'ai vu ! Il a l'air super intéressant.",
+          "On en discute demain en réunion ?"
+        ]
+      },
+      "lastMessageAuthor": "AliceDubois"
+    },
+    {
+      "id": 2,
+      "messages": {
+        "message": [
+          "Bob, tu as fini le rapport ?",
+          "Pas encore, je l'envoie ce soir 📁",
+          "Pas de problème, merci !"
+        ]
+      },
+      "lastMessageAuthor": "BobMartin"
+    },
+    {
+      "id": 3,
+      "messages": {
+        "message": [
+          "Charlie, merci pour ton aide hier ! 🙌",
+          "Avec plaisir, c'était rien !"
+        ]
+      },
+      "lastMessageAuthor": "CharlieNguyen"
+    },
+    {
+      "id": 4,
+      "messages": {
+        "message": [
+          "Dana, ça te dit un déjeuner demain ?",
+          "Oui, avec plaisir ! À midi ?",
+          "Parfait, à demain !"
+        ]
+      },
+      "lastMessageAuthor": "DanaCohen"
+    },
+    {
+      "id": 5,
+      "messages": {
+        "message": [
+          "Eva, tu as vu le nouveau film ?",
+          "Pas encore, mais j'ai prévu d'y aller ce week-end !"
+        ]
+      },
+      "lastMessageAuthor": "EvaLeroy"
+    }
+  ]
+}

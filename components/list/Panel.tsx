@@ -19,9 +19,12 @@ export default function Panel(props: PanelProps): React.JSX.Element
 
 function renderItems(list: [], renderComponent: (item: any) => React.JSX.Element): React.JSX.Element
 {
-    return list.length === 0 ?
-        <View><Text>Oups, il semblerait que rien ne corresponde a votre recherche</Text></View> :
-        <Animated.FlatList renderItem={renderComponent} data={list} />
+    if (list.length === 0 )
+    {
+        return <View><Text>Oups, il semblerait que rien ne corresponde a votre recherche</Text></View>
+    }
+
+    return <Animated.FlatList renderItem={renderComponent} data={list} />
 }
 
 const styles = StyleSheet.create({
