@@ -10,6 +10,7 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import {verifyInstallation} from "nativewind";
 import ConnexionHandler from "~/handler/ConnexionHandler";
 import {useState} from "react";
+import UserHandler from "~/handler/UserHandler";
 
 const LIGHT_THEME = {
     dark: false,

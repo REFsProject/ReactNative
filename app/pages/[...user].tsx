@@ -14,15 +14,25 @@ import React, {useEffect, useRef, useState} from "react";
 import FlatList = Animated.FlatList;
 import {Avatar, AvatarImage} from "~/lib/components/ui/avatar";
 import Colors from "~/constants/Colors";
+import UserHandler, {useActualUser} from "~/handler/UserHandler";
 
 export type PrivateMessageProps = {
-    data: {
         id: number;
-        messages: {
-            message: string[];
-        }
+        messages: MessageProps[];
         lastMessageAuthor?: string|null;
-    }[]
+}
+
+export type MessageProps = {
+    from: {
+        id: number;
+        username: string;
+    }
+    to: {
+        id: number;
+        username: string;
+    }
+    timestamp: number;
+    content: string;
 }
 
 const defaultAvatarUri: string = "https://picsum.photos/200/200?image=4";
@@ -81,11 +91,10 @@ export default function Route() {
 
 const MessageContainer = ({messages, user}): React.JSX.Element =>
     {
-        console.log(messages.messages);
         return (
             <View style={{ flex: 1 , top: 5}}>
-                <FlatList data={messages.messages} renderItem={({item, index}) => {
-                    let messageStyle = getStyleFromMessage(item, user[0]);
+                <FlatList data={messages} renderItem={({item, index}) => {
+                    let messageStyle = getStyleFromMessage(item.messages, useActualUser(), index);
 
                     return (
                         <View style={{...messageStyle}}>
@@ -93,7 +102,6 @@ const MessageContainer = ({messages, user}): React.JSX.Element =>
                                 <AvatarImage source={{ uri: defaultAvatarUri }}/>
                             </Avatar>
                             <View style={{...styles.messageContainer}}>
-
                                 <Text style={{fontFamily: 'Arial', fontSize: 16, color: '#333', lineHeight: 24}}> {item.message} </Text>
                             </View>
                         </View>
@@ -104,21 +112,24 @@ const MessageContainer = ({messages, user}): React.JSX.Element =>
         )
     }
 
-function getStyleFromMessage(data: PrivateMessageProps["data"][0], user: string)
+function getStyleFromMessage(data: MessageProps, user: UserHandler, key: number)
 {
-    let {marginRight, marginLeft, side} = data.from === user ? {marginRight: 0, marginLeft: "auto", side: "right"} : {marginRight: "auto", marginLeft: 0, side: "left"} as {
+    let message = data[key];
+    console.log('message', message, key, "|||||", data);
+    let id = message["from"]["id"];
+    let {marginRight, marginLeft, side} = id === user.id ? {marginRight: 0, marginLeft: "auto", side: "right"} : {marginRight: "auto", marginLeft: 0, side: "left"} as {
         marginRight: DimensionValue,
         marginLeft: DimensionValue,
         side: "left" | "right";
     };
-    let margin = data.lastMessageAuthor === user ? 30 : 2;
+    let margin = message.lastMessageAuthor === user ? 30 : 2;
 
     return {marginRight, marginLeft, marginBottom: margin, flexDirection: side === "left" ? "row" : "row-reverse"};
 }
 
 function queryMessage(): PrivateMessageProps
 {
-    return require("data/messages.json");
+    return require("data/messages.json")["data"];
 }
 
 function sendMessage(message: PrivateMessageProps) {}

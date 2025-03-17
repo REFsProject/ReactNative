@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {PrivateMessageProps} from "~/app/pages/[...user]";
+import {MessageProps, PrivateMessageProps} from "~/app/pages/[...user]";
 
 type BaseUserProps = {
     internalId: number,
@@ -8,57 +8,85 @@ type BaseUserProps = {
 
 }
 
-type BaseFriendsProps =
+export type BaseFriendsProps =
     {
-        friends:
-            {
-                username: string,
-                since: string,
-                id: number,
-            }[]
+        username: string,
+        since: string,
+        profilePicture: {
+            uri: string,
+        },
+        lastMessage: string
+        id: number,
+    }[]
 
-    }
+
+let user: UserHandler = null
+
+export const useActualUser = () =>
+{
+    if(user === null) throw new Error("user is not registered and trying to be accessed")
+
+    return user;
+}
 
 class UserHandler {
 
 
-    private actualUser: BaseUserProps|null = null;
+    private _actualUser: BaseUserProps|null = null;
 
-    private _friends: BaseFriendsProps|null = null;
+    private _friends: BaseFriendsProps[]|null = null;
+
+    private _id: number | null = null;
 
     constructor(props: BaseUserProps) {
-        if(this.actualUser === null)
+        if(this._actualUser === null)
         {
-            this.setUser(props);
+            this.actualUser = props;
+            user = this;
         }
     }
 
-    get friends(): BaseFriendsProps | null {
+    get id(): number | null {
+        return this._id;
+    }
+
+    set id(value: number | null) {
+        this._id = value;
+    }
+
+    get friends(): BaseFriendsProps[] | null {
         return this._friends;
     }
 
-    set friends(value: BaseFriendsProps | null) {
+    set friends(value: BaseFriendsProps[] | null) {
         this._friends = value;
     }
 
-    getMessageWith(id: number, messageList: PrivateMessageProps): string[]
+    getMessageWith(id: number, messageList: PrivateMessageProps[]): MessageProps[]
     {
-        for (let i = 0; i < messageList.data.length; i += 1)
+        for (let i = 0; i < messageList.length; i += 1)
         {
-            if (messageList.data[i].id === id)
+            if (messageList[i].id === id)
             {
-                return messageList.data[i].messages;
+                return messageList[i].messages;
             }
         }
         return []
     }
 
-    getUser(): BaseUserProps
+    get actualUser(): BaseUserProps
     {
-        return this.actualUser;
+        return this._actualUser;
     }
 
-    setUser(user: BaseUserProps): void {
-        this.actualUser = user;
+    set actualUser(user: BaseUserProps) {
+        this._actualUser = user;
     }
 }
+
+export function createFromId(): void
+{
+
+}
+
+export default UserHandler;

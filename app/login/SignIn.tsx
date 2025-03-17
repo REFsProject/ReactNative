@@ -6,16 +6,24 @@ import {Text} from "~/lib/components/ui/text";
 import {Checkbox} from "~/lib/components/ui/checkbox";
 import {router} from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import UserHandler from "~/handler/UserHandler";
 
 type LoginUserEntry = {
-    email: string;
+    username: string;
     password: string;
     aggredConditions: boolean
 }
 
+export type LoggedUser = {
+    username: string,
+    password: string,
+    email: string,
+    id: number
+}
+
 
 export default function SignIn() {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [agreed, setAgreed] = useState(false);
     const errorRef = useRef(false);
@@ -34,9 +42,9 @@ export default function SignIn() {
                     </View>
                     <View className={"mb-6"}>
                         <Input
-                            placeholder={"email"}
-                            value={email}
-                            onChangeText={(text: string) => setEmail(text)}
+                            placeholder={"username"}
+                            value={username}
+                            onChangeText={(text: string) => setUsername(text)}
                         />
                     </View>
 
@@ -83,7 +91,7 @@ export default function SignIn() {
                         <Button
                             className={"text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"}
                             onPress={() => attempLogin({
-                                email: email,
+                                username: username,
                                 password: password,
                                 aggredConditions: agreed
                             }, errorRef)}
@@ -106,13 +114,20 @@ const styles = StyleSheet.create({
 
 function attempLogin(props: LoginUserEntry, ref: MutableRefObject<boolean>): void
 {
-    if(props.email === "" || props.password === "" || props.aggredConditions === false)
+    if(props.username === "" || props.password === "" || props.aggredConditions === false)
     {
         ref.current = true;
-
     }
 
-    router.push('/(tabs)/Main');
-    AsyncStorage.setItem("isLogged", 'true').then(() => console.log("loged succesfully"));
+    let userInfo: LoggedUser =  {username: props.username, password: props.password, id: 0, email: 'test@test.com'};
+
+    AsyncStorage.setItem("loginEntry", JSON.stringify(userInfo)).then(() => {
+        AsyncStorage.setItem("isLogged", 'true').then(async () =>  {
+            let userData: LoggedUser = JSON.parse(await AsyncStorage.getItem("loginEntry"))
+            new UserHandler({username: userData.username, internalId: userData.id, password: userData.password});
+            console.log("logged succesfully");
+        })
+
+    });
 }
 

@@ -1,12 +1,16 @@
 [
   {
     "username": "AliceDubois",
+    "id": 1,
+    "since": "2023/12/24",
     "profilePicture": {
       "uri": "https://picsum.photos/200/200?image=0"
     },
     "lastMessage": "Hey, tu as vu le nouveau projet ? 😄"
   },
   {
+    "id": 2,
+    "since": "2023/12/24",
     "username": "BobMartin",
     "profilePicture": {
       "uri": "https://picsum.photos/200/200?image=1"
@@ -14,6 +18,8 @@
     "lastMessage": "On se retrouve à 15h devant le café !"
   },
   {
+    "id": 3,
+    "since": "2023/12/24",
     "username": "CharlieNguyen",
     "profilePicture": {
       "uri": "https://picsum.photos/200/200?image=2"
@@ -21,6 +27,8 @@
     "lastMessage": "Je t'envoie le dossier ce soir 📁"
   },
   {
+    "id": 4,
+    "since": "2023/12/24",
     "username": "DanaCohen",
     "profilePicture": {
       "uri": "https://picsum.photos/200/200?image=3"
@@ -28,6 +36,8 @@
     "lastMessage": "Merci pour ton aide hier ! 🙌"
   },
   {
+    "id": 5,
+    "since": "2023/12/24",
     "username": "EvaLeroy",
     "profilePicture": {
       "uri": "https://picsum.photos/200/200?image=4"

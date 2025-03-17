@@ -4,14 +4,14 @@ import MessageCard, {MessageCardProps} from "~/components/card/MessageCard";
 import SearchBar from "~/components/navbar/SearchBar";
 import Panel from "~/components/list/Panel";
 import FriendsCard from "~/components/card/FriendsCard";
-import {useContainerHeightRef} from "~/components/common/RefsContentWrapper";
 import {router} from "expo-router";
+import {BaseFriendsProps} from "~/handler/UserHandler";
 
-const data = require("data/friends.json") as MessageCardProps[];
+const data = require("data/friends.json") as BaseFriendsProps;
 
 //TODO: Reload system when slidding to the botttom
 
-export const useFriendListRef = (): MutableRefObject<MessageCardProps[]> => {
+export const useFriendListRef = (): MutableRefObject<BaseFriendsProps> => {
     //API update
     return useRef(data);
 }
@@ -35,7 +35,7 @@ export default function Message()
 {
     const [value, setValue] = React.useState("");
     const [matchedResult, setMatchedResult] = useState([] as MessageCardProps[]);
-    const friendList: MessageCardProps[] = useFriendListRef().current;
+    const friendList: BaseFriendsProps = useFriendListRef().current;
     const [isPanelRender, setPanelRender] = useState(false);
 
     const onChangeText = (text: string)=>
@@ -45,6 +45,7 @@ export default function Message()
             setValue(text);
             return;
         }
+
 
         let result = [];
 
@@ -76,7 +77,8 @@ export default function Message()
             <View style={{top: 120, display: isPanelRender ? "none" : "flex", flex: 1}}>
                 <Animated.FlatList
                     renderItem={renderMessage}
-                    data={data}
+                    data={friendList}
+                    keyExtractor={(item, index) => item.id}
                 />
             </View>
         </SafeAreaView>

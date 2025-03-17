@@ -1,57 +1,190 @@
 {
-  "messages": [
+  "data": [
     {
       "id": 1,
-      "messages": {
-        "message": [
-          "Alice, tu as vu le nouveau projet ? 😄",
-          "Oui, je l'ai vu ! Il a l'air super intéressant.",
-          "On en discute demain en réunion ?"
-        ]
-      },
+      "messages": [
+        {
+          "from": {
+            "id": 1,
+            "username": "AliceDubois"
+          },
+          "to": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "timestamp": 1633072800,
+          "content": "Salut Litoz, tu as vu le nouveau projet ? 😄"
+        },
+        {
+          "from": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "to": {
+            "id": 1,
+            "username": "AliceDubois"
+          },
+          "timestamp": 1633072900,
+          "content": "Oui, je l'ai vu ! Il a l'air super intéressant."
+        },
+        {
+          "from": {
+            "id": 1,
+            "username": "AliceDubois"
+          },
+          "to": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "timestamp": 1633073000,
+          "content": "On en discute demain en réunion ?"
+        }
+      ],
       "lastMessageAuthor": "AliceDubois"
     },
     {
       "id": 2,
-      "messages": {
-        "message": [
-          "Bob, tu as fini le rapport ?",
-          "Pas encore, je l'envoie ce soir 📁",
-          "Pas de problème, merci !"
-        ]
-      },
+      "messages": [
+        {
+          "from": {
+            "id": 2,
+            "username": "BobMartin"
+          },
+          "to": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "timestamp": 1633073100,
+          "content": "Litoz, tu as fini le rapport ?"
+        },
+        {
+          "from": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "to": {
+            "id": 2,
+            "username": "BobMartin"
+          },
+          "timestamp": 1633073200,
+          "content": "Pas encore, je l'envoie ce soir 📁"
+        },
+        {
+          "from": {
+            "id": 2,
+            "username": "BobMartin"
+          },
+          "to": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "timestamp": 1633073300,
+          "content": "Pas de problème, merci !"
+        }
+      ],
       "lastMessageAuthor": "BobMartin"
     },
     {
       "id": 3,
-      "messages": {
-        "message": [
-          "Charlie, merci pour ton aide hier ! 🙌",
-          "Avec plaisir, c'était rien !"
-        ]
-      },
-      "lastMessageAuthor": "CharlieNguyen"
+      "messages": [
+        {
+          "from": {
+            "id": 3,
+            "username": "CharlieNguyen"
+          },
+          "to": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "timestamp": 1633073400,
+          "content": "Frank, tu as vu le nouveau film ?"
+        },
+        {
+          "from": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "to": {
+            "id": 3,
+            "username": "CharlieNguyen"
+          },
+          "timestamp": 1633073500,
+          "content": "Pas encore, mais j'ai prévu d'y aller ce week-end !"
+        }
+      ],
+      "lastMessageAuthor": "Litoz"
     },
     {
       "id": 4,
-      "messages": {
-        "message": [
-          "Dana, ça te dit un déjeuner demain ?",
-          "Oui, avec plaisir ! À midi ?",
-          "Parfait, à demain !"
-        ]
-      },
+      "messages": [
+        {
+          "from": {
+            "id": 4,
+            "username": "DanaCohen"
+          },
+          "to": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "timestamp": 1633073600,
+          "content": "Hugo, ça te dit un déjeuner demain ?"
+        },
+        {
+          "from": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "to": {
+            "id": 4,
+            "username": "DanaCohen"
+          },
+          "timestamp": 1633073700,
+          "content": "Oui, avec plaisir ! À midi ?"
+        },
+        {
+          "from": {
+            "id": 4,
+            "username": "DanaCohen"
+          },
+          "to": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "timestamp": 1633073800,
+          "content": "Parfait, à demain !"
+        }
+      ],
       "lastMessageAuthor": "DanaCohen"
     },
     {
       "id": 5,
-      "messages": {
-        "message": [
-          "Eva, tu as vu le nouveau film ?",
-          "Pas encore, mais j'ai prévu d'y aller ce week-end !"
-        ]
-      },
-      "lastMessageAuthor": "EvaLeroy"
+      "messages": [
+        {
+          "from": {
+            "id": 109,
+            "username": "EvaLeroy"
+          },
+          "to": {
+            "id": 110,
+            "username": "Litoz"
+          },
+          "timestamp": 1633073900,
+          "content": "Julia, merci pour ton aide hier ! 🙌"
+        },
+        {
+          "from": {
+            "id": 110,
+            "username": "Litoz"
+          },
+          "to": {
+            "id": 109,
+            "username": "EvaLeroy"
+          },
+          "timestamp": 1633074000,
+          "content": "Avec plaisir, c'était rien !"
+        }
+      ],
+      "lastMessageAuthor": "Litoz"
     }
   ]
 }
