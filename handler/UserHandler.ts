@@ -22,7 +22,7 @@ export type BaseFriendsProps =
 
 let user: UserHandler = null
 
-export const useActualUser = () =>
+export const useActualUser = (): UserHandler =>
 {
     if(user === null) throw new Error("user is not registered and trying to be accessed")
 
@@ -30,7 +30,6 @@ export const useActualUser = () =>
 }
 
 class UserHandler {
-
 
     private _actualUser: BaseUserProps|null = null;
 
@@ -44,6 +43,7 @@ class UserHandler {
             this.actualUser = props;
             user = this;
         }
+        this.friends = require("data/friends.json");
     }
 
     get id(): number | null {
@@ -62,16 +62,26 @@ class UserHandler {
         this._friends = value;
     }
 
-    getMessageWith(id: number, messageList: PrivateMessageProps[]): MessageProps[]
+    getMessageWith(id: number, messageList: PrivateMessageProps[]): PrivateMessageProps
     {
-        for (let i = 0; i < messageList.length; i += 1)
+        for (let key in messageList)
         {
-            if (messageList[i].id === id)
+            if(messageList[key]["id"] === id) return messageList[key];
+        }
+    }
+
+    getLastMessage(messages: PrivateMessageProps, message: MessageProps): MessageProps
+    {
+        let list = messages.messages
+        for(let key in list)
+        {
+            if(list[key] === message)
             {
-                return messageList[i].messages;
+                let keyValue = parseInt(Object.keys(list).find(((key) => list[key] === message)));
+                return list[keyValue === 0 ? 0 : keyValue - 1];
             }
         }
-        return []
+        return message;
     }
 
     get actualUser(): BaseUserProps
@@ -82,7 +92,19 @@ class UserHandler {
     set actualUser(user: BaseUserProps) {
         this._actualUser = user;
     }
+
+    getIdFromUsername(username: string): null|number {
+        let data = require("data/global/users.json")
+        for (const key in data) {
+            if (data[key] === username) {
+                return parseInt(key);
+            }
+        }
+        return null;
+    }
 }
+
+
 
 export function createFromId(): void
 {

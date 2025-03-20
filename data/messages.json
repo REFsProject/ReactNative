@@ -161,11 +161,11 @@
       "messages": [
         {
           "from": {
-            "id": 109,
+            "id": 5,
             "username": "EvaLeroy"
           },
           "to": {
-            "id": 110,
+            "id": 0,
             "username": "Litoz"
           },
           "timestamp": 1633073900,
@@ -173,11 +173,11 @@
         },
         {
           "from": {
-            "id": 110,
+            "id": 0,
             "username": "Litoz"
           },
           "to": {
-            "id": 109,
+            "id": 5,
             "username": "EvaLeroy"
           },
           "timestamp": 1633074000,

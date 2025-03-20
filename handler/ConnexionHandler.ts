@@ -26,9 +26,16 @@ async function processLogin()
     processLogin()
         .then(async (isLogged: boolean) => {
             if (isLogged) {
-                router.replace("/(tabs)/Main");
-                let userData: LoggedUser = JSON.parse(await AsyncStorage.getItem("loginEntry"))
-                new UserHandler({username: userData.username, internalId: userData.id, password: userData.password});
+
+                try {
+                    let userData: LoggedUser = JSON.parse(await AsyncStorage.getItem("loginEntry"));
+                    new UserHandler({username: userData.username, internalId: userData.id, password: userData.password});
+                    let user = useActualUser();
+                    router.replace("/(tabs)/Main");
+
+                }catch (e) {
+                    router.replace("/login/SignIn");
+                }
                 return;
             }
             router.replace("/login/SignIn");

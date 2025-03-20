@@ -91,18 +91,24 @@ export default function Route() {
 
 const MessageContainer = ({messages, user}): React.JSX.Element =>
     {
+        let mainUser = useActualUser();
+        let userId = mainUser.getIdFromUsername(user[0]);
+        let message = mainUser.getMessageWith(mainUser.getIdFromUsername(user[0]), messages);
         return (
             <View style={{ flex: 1 , top: 5}}>
-                <FlatList data={messages} renderItem={({item, index}) => {
-                    let messageStyle = getStyleFromMessage(item.messages, useActualUser(), index);
-
+                <FlatList data={message["messages"]} renderItem={({item, index}) => {
+                    let lastMessage = mainUser.getLastMessage(message, item);
+                    let firstMessage = lastMessage === item;
+                    let sameAuthor = lastMessage["from"]["id"] === item["from"]["id"];
+                    console.log(lastMessage["from"], item["from"])
+                    let messageStyle = getStyleFromMessage(item, useActualUser(), sameAuthor, firstMessage);
                     return (
                         <View style={{...messageStyle}}>
                             <Avatar alt={user[0]} style={{marginHorizontal: 10}}>
                                 <AvatarImage source={{ uri: defaultAvatarUri }}/>
                             </Avatar>
                             <View style={{...styles.messageContainer}}>
-                                <Text style={{fontFamily: 'Arial', fontSize: 16, color: '#333', lineHeight: 24}}> {item.message} </Text>
+                                <Text style={{fontFamily: 'Arial', fontSize: 16, color: '#333', lineHeight: 24}}> {item.content} </Text>
                             </View>
                         </View>
 
@@ -112,17 +118,16 @@ const MessageContainer = ({messages, user}): React.JSX.Element =>
         )
     }
 
-function getStyleFromMessage(data: MessageProps, user: UserHandler, key: number)
+function getStyleFromMessage(message: MessageProps, user: UserHandler, sameAuthor: boolean, firstMessage: boolean)
 {
-    let message = data[key];
-    console.log('message', message, key, "|||||", data);
     let id = message["from"]["id"];
-    let {marginRight, marginLeft, side} = id === user.id ? {marginRight: 0, marginLeft: "auto", side: "right"} : {marginRight: "auto", marginLeft: 0, side: "left"} as {
+    let {marginRight, marginLeft, side} = id === user.actualUser.internalId ? {marginRight: 0, marginLeft: "auto", side: "right"} : {marginRight: "auto", marginLeft: 0, side: "left"} as {
         marginRight: DimensionValue,
         marginLeft: DimensionValue,
         side: "left" | "right";
     };
-    let margin = message.lastMessageAuthor === user ? 30 : 2;
+    let margin = sameAuthor ? 2 : 2;
+    if(firstMessage) margin = 30;
 
     return {marginRight, marginLeft, marginBottom: margin, flexDirection: side === "left" ? "row" : "row-reverse"};
 }

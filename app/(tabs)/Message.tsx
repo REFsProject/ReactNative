@@ -66,6 +66,7 @@ export default function Message()
         return <FriendsCard username={item.username} avatar={item.profilePicture}/>
     }
 
+
     return(
         <SafeAreaView className={'bg-black h-full'}>
             <View style={styles.searchBar}>
