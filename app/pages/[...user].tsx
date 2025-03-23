@@ -6,7 +6,7 @@ import {
     TextInput,
     TouchableOpacity,
     View,
-    StyleSheet, DimensionValue, Image
+    StyleSheet, DimensionValue, Image, Dimensions, ViewStyle
 } from 'react-native';
 import {router, useLocalSearchParams} from 'expo-router';
 import {Feather, Ionicons} from "@expo/vector-icons";
@@ -15,6 +15,8 @@ import FlatList = Animated.FlatList;
 import {Avatar, AvatarImage} from "~/lib/components/ui/avatar";
 import Colors from "~/constants/Colors";
 import UserHandler, {useActualUser} from "~/handler/UserHandler";
+import {useHeaderHeight} from "react-native-screens/native-stack";
+import {StyleProps} from "react-native-reanimated";
 
 export type PrivateMessageProps = {
         id: number;
@@ -34,6 +36,9 @@ export type MessageProps = {
     timestamp: number;
     content: string;
 }
+
+const { height, width } = Dimensions.get('window');
+
 
 const defaultAvatarUri: string = "https://picsum.photos/200/200?image=4";
 
@@ -71,8 +76,8 @@ export default function Route() {
                 <MessageContainer messages={messages} user={params.user} />
             </View>
 
-            <View className={"border-2"} style={{height: 60, flexDirection: "row", borderColor: Colors.white, borderRadius: 40, marginHorizontal: 5, bottom: 20}}>
-                <TextInput className={"text-white"} style={{borderColor: "white", borderCurve: "circular", flex: 1, marginHorizontal: 20}}
+            <View className={"border-2"} style={{height: 60, flexDirection: "row", borderColor: Colors.white, borderRadius: 40, marginHorizontal: 5, bottom: 20, backgroundColor: "black", maxWidth: 500}}>
+                <TextInput className={"text-white"} style={{borderColor: "white", borderCurve: "circular", flex: 1, marginHorizontal: 10}}
                            placeholder={"Ecrivez quelque chose..."}
                            value={value}
                            cursorColor={Colors.white}
@@ -81,7 +86,7 @@ export default function Route() {
                                setValue(value);
                            }}
                 />
-                <TouchableOpacity style={{marginHorizontal: 40, marginTop: 15}}>
+                <TouchableOpacity style={{marginRight: 40, marginTop: 15}}>
                     <Feather name="send" size={24} color="white" style={{alignSelf: "center"}}/>
                 </TouchableOpacity>
             </View>
@@ -96,29 +101,49 @@ const MessageContainer = ({messages, user}): React.JSX.Element =>
         let message = mainUser.getMessageWith(mainUser.getIdFromUsername(user[0]), messages);
         return (
             <View style={{ flex: 1 , top: 5}}>
-                <FlatList data={message["messages"]} renderItem={({item, index}) => {
+                <FlatList data={message["messages"]} renderItem={({item, index}) =>
+                {
                     let lastMessage = mainUser.getLastMessage(message, item);
                     let firstMessage = lastMessage === item;
-                    let sameAuthor = lastMessage["from"]["id"] === item["from"]["id"];
-                    console.log(lastMessage["from"], item["from"])
+                    let sameAuthor = firstMessage ? false : lastMessage["from"]["id"] === item["from"]["id"];
+                    console.log(lastMessage["from"], item["from"], sameAuthor, firstMessage)
                     let messageStyle = getStyleFromMessage(item, useActualUser(), sameAuthor, firstMessage);
                     return (
-                        <View style={{...messageStyle}}>
-                            <Avatar alt={user[0]} style={{marginHorizontal: 10}}>
-                                <AvatarImage source={{ uri: defaultAvatarUri }}/>
-                            </Avatar>
-                            <View style={{...styles.messageContainer}}>
-                                <Text style={{fontFamily: 'Arial', fontSize: 16, color: '#333', lineHeight: 24}}> {item.content} </Text>
+                        <View >
+                            <View style={{
+                                flexDirection: "column",
+                                marginRight: messageStyle.marginRight === 0 ? messageStyle.marginRight + 12 :messageStyle.marginRight,
+                                marginLeft: messageStyle.marginLeft,
+                                top: 25 }}
+                            >
+                                {
+                                    // Je sais pas si sa rends bien en vrai
+                                    //sameAuthor ? null : <Text style={{color: "gray", top: 0, fontSize: 15}}> {item["from"]["username"]}</Text>
+                                }
+                            </View>
+
+                            <View style={{...messageStyle}}>
+                                <View>
+                                    {
+                                        sameAuthor ?  null :
+                                            <Avatar alt={user[0]} style={{marginHorizontal: 10, height: 35, width: 35 }}>
+                                                <AvatarImage source={{ uri: defaultAvatarUri }} />
+                                            </Avatar>
+                                    }
+                                </View>
+                                <View style={{...styles.messageContainer, left: sameAuthor ? 55 : 0}}>
+                                    <Text style={{fontFamily: 'Arial', fontSize: 16, color: 'white', lineHeight: 24, }}> {item.content} </Text>
+                                </View>
                             </View>
                         </View>
 
-                    )} }
-                />
+                    )
+                }}/>
             </View>
         )
     }
 
-function getStyleFromMessage(message: MessageProps, user: UserHandler, sameAuthor: boolean, firstMessage: boolean)
+function getStyleFromMessage(message: MessageProps, user: UserHandler, sameAuthor: boolean, firstMessage: boolean): StyleProps
 {
     let id = message["from"]["id"];
     let {marginRight, marginLeft, side} = id === user.actualUser.internalId ? {marginRight: 0, marginLeft: "auto", side: "right"} : {marginRight: "auto", marginLeft: 0, side: "left"} as {
@@ -126,10 +151,10 @@ function getStyleFromMessage(message: MessageProps, user: UserHandler, sameAutho
         marginLeft: DimensionValue,
         side: "left" | "right";
     };
-    let margin = sameAuthor ? 2 : 2;
+    let margin = sameAuthor ? 2 : 30;
     if(firstMessage) margin = 30;
 
-    return {marginRight, marginLeft, marginBottom: margin, flexDirection: side === "left" ? "row" : "row-reverse"};
+    return {marginRight, marginLeft, marginTop: margin, flexDirection: side === "left" ? "row" : "row-reverse"};
 }
 
 function queryMessage(): PrivateMessageProps
@@ -141,12 +166,12 @@ function sendMessage(message: PrivateMessageProps) {}
 
 const styles = StyleSheet.create({
     messageContainer: {
-        maxWidth: 400,
+        maxWidth: width - 70,
         flexDirection: "row",
         padding: 10,
         marginHorizontal: 'auto',
         borderRadius: 20,
-        backgroundColor: '#e9eff5',
+        backgroundColor: '#1a1a1a',
         position: 'relative',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },

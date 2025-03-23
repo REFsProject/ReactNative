@@ -1,11 +1,14 @@
-import {useState} from "react";
 import {MessageProps, PrivateMessageProps} from "~/app/pages/[...user]";
+import {LoggedUser} from "~/app/login/SignIn";
+import {defaultAvatar} from "~/utils/Utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {router} from "expo-router";
 
 type BaseUserProps = {
     internalId: number,
     username: string,
     password: string,
-
+    avatarUri: string
 }
 
 export type BaseFriendsProps =
@@ -106,9 +109,24 @@ class UserHandler {
 
 
 
-export function createFromId(): void
+export function createUser(props: LoggedUser): void
 {
+    let userInfo: LoggedUser =  {username: props.username, password: props.password, id: 0, email: 'test@test.com'};
+    setInterval(async () => {
+        AsyncStorage.setItem("loginEntry", JSON.stringify(userInfo)).then(() => {
+            AsyncStorage.setItem("isLogged", 'true').then(async () =>  {
+                new UserHandler({username: props.username, internalId: props.id, password: props.password, avatarUri: defaultAvatar});
+                router.replace("/(tabs)/Main");
+                console.log("logged succesfully");
+            })
+        });
+    })
+}
 
+export function generateId(): number
+{
+    let ids = Object.keys(require("data/global/users.json"));
+    return ids.length + 1;
 }
 
 export default UserHandler;

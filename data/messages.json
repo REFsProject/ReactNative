@@ -25,7 +25,7 @@
             "username": "AliceDubois"
           },
           "timestamp": 1633072900,
-          "content": "Oui, je l'ai vu ! Il a l'air super intéressant."
+          "content": "Oui, je l'ai vu ! Il a l'air super intéressant.vsdddddddddddddddddddddddddddddddd"
         },
         {
           "from": {
@@ -38,6 +38,18 @@
           },
           "timestamp": 1633073000,
           "content": "On en discute demain en réunion ?"
+        },
+        {
+          "from": {
+            "id": 1,
+            "username": "AliceDubois"
+          },
+          "to": {
+            "id": 0,
+            "username": "Litoz"
+          },
+          "timestamp": 1633073000,
+          "content": "On en discute demain en réunion vvvvvvvvvdsssssssssssssssssssssssssssssssssssssssssssssssss?"
         }
       ],
       "lastMessageAuthor": "AliceDubois"

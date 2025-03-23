@@ -6,6 +6,8 @@ const validateEmail = (email) => {
         );
 };
 
+export const defaultAvatar =  ""
+
 export const sliceString = (string: string, maxChar: number) => {
     return string.length > maxChar ?  string.slice(0, maxChar) + "..." : string;
 }

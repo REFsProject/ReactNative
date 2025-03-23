@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {router} from "expo-router";
-import UserHandler, {useActualUser} from "~/handler/UserHandler";
+import UserHandler, {createUser, useActualUser} from "~/handler/UserHandler";
 import {LoggedUser} from "~/app/login/SignIn";
 
 
@@ -26,10 +26,10 @@ async function processLogin()
     processLogin()
         .then(async (isLogged: boolean) => {
             if (isLogged) {
-
                 try {
                     let userData: LoggedUser = JSON.parse(await AsyncStorage.getItem("loginEntry"));
-                    new UserHandler({username: userData.username, internalId: userData.id, password: userData.password});
+                    let avatar = await AsyncStorage.getItem("avatar");
+                    new UserHandler({username: userData.username, internalId: userData.id, password: userData.password, avatarUri: avatar});
                     let user = useActualUser();
                     router.replace("/(tabs)/Main");
 

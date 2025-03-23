@@ -118,17 +118,5 @@ function attempLogin(props: LoginUserEntry, ref: MutableRefObject<boolean>): voi
     {
         ref.current = true;
     }
-
-    let userInfo: LoggedUser =  {username: props.username, password: props.password, id: 0, email: 'test@test.com'};
-
-    AsyncStorage.setItem("loginEntry", JSON.stringify(userInfo)).then(() => {
-        AsyncStorage.setItem("isLogged", 'true').then(async () =>  {
-            let userData: LoggedUser = JSON.parse(await AsyncStorage.getItem("loginEntry"))
-            new UserHandler({username: userData.username, internalId: userData.id, password: userData.password});
-            router.replace("/(tabs)/Main");
-            console.log("logged succesfully");
-        })
-
-    });
 }
 
