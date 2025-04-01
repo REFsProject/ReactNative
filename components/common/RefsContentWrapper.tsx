@@ -1,7 +1,7 @@
 //TODO: Add/make a video librairies
 
 import React, {useState, useRef, MutableRefObject} from 'react';
-import {View, Dimensions} from 'react-native';
+import {View, Dimensions, Text} from 'react-native';
 import Animated from "react-native-reanimated";
 import RefsVideo from "~/components/video/RefsVideo";
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -9,7 +9,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 type RefsData = {
     id: string;
-    videoUrl: string;
+    sources: string;
     likes: number;
     comments: number;
     additionalData?: any;
@@ -25,7 +25,7 @@ export const useContainerHeightRef = () =>
     return ContainerHeightRef;
 }
 
-const videoData  = [
+const videoData  = /*[
     {
         id: '1',
         videoUrl: 'https://youtu.be/K4TOrB7at0Y?si=bZddJ8Ib0Rwxl3aD',
@@ -63,7 +63,7 @@ const videoData  = [
         comments: 1400
     },
 
-] as RefsData[];
+]*/ require("data/sample.json") as RefsData[];
 
 export default function RefsContentWrapper() {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -81,13 +81,14 @@ export default function RefsContentWrapper() {
         itemVisiblePercentThreshold: 50,
     };
 
-    const renderItem = ({ item, index }) => {
+    const renderItem = ({ item,  index }) => {
         return (
         <View style={{height: containerHeightRef.current , width: width}}>
             <RefsVideo
                 likes={item.likes}
                 comments={item.comments}
                 heightRef={containerHeightRef}
+                videoUri={item.sources}
             />
         </View>
         )
@@ -101,7 +102,6 @@ export default function RefsContentWrapper() {
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 pagingEnabled={true}
-                className={"bg-black"}
                 showsVerticalScrollIndicator={false}
                 onViewableItemsChanged={onViewableItemsChanged.current}
                 viewabilityConfig={viewabilityConfig}
